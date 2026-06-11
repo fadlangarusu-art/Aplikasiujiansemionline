@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Guru | Aplikasi Sekolah Kita</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="guru_style.css">
+</head>
+<body>
+
+    <aside class="sidebar glass-panel">
+        <div class="sidebar-header">
+            <img src="logo sekolah.png" alt="Logo" class="sidebar-logo">
+            <h3>Guru<span>Panel</span></h3>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Bank Soal & Jadwal</a></li>
+            <li><a href="#" class="text-danger" onclick="prosesLogout()">🚪 Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="top-header glass-panel">
+            <h2>Selamat Datang, Bapak/Ibu Guru! 👨‍🏫</h2>
+            <p>Kelola bank soal dan jadwal ujian untuk kelas Anda di sini.</p>
+        </header>
+
+        <section class="action-toolbar glass-panel" style="margin-bottom: 20px;">
+            <div class="action-group">
+                <button class="btn btn-primary" onclick="openModal('addExamModal')">➕ Tambah Bank Soal & Jadwal</button>
+            </div>
+            <div class="action-group">
+                <input type="text" placeholder="🔍 Cari mata pelajaran..." class="search-input">
+            </div>
+        </section>
+
+        <section class="exam-grid">
+            
+            <div class="exam-card glass-panel">
+                <div class="exam-header">
+                    <div class="exam-title">
+                        <h3>Matematika Wajib</h3>
+                        <span class="badge">Kelas X IPA 1</span>
+                    </div>
+                </div>
+                
+                <div class="exam-body">
+                    <div class="exam-info">
+                        <div class="info-item">
+                            <span class="label">Token Ujian:</span>
+                            <span class="token-text">MTK-X-2026</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Waktu Mulai:</span>
+                            <span>03 Juni 2026, 08:00</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Waktu Selesai:</span>
+                            <span>03 Juni 2026, 10:00</span>
+                        </div>
+                    </div>
+                    <div class="exam-qr">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=MTK-X-2026" alt="QR Code Token">
+                        <button class="btn-dl-qr" onclick="downloadQR('MTK-X-2026')">⬇️ Download QR</button>
+                    </div>
+                </div>
+
+                <div class="exam-actions">
+                    <div class="action-row">
+                        <button class="btn-sm btn-info">👁️ Lihat Hasil</button>
+                        <button class="btn-sm btn-success">⬇️ Download Hasil</button>
+                    </div>
+                    <div class="action-row" style="margin-top: 5px; margin-bottom: 5px;">
+                        <button class="btn-sm btn-upload-pdf" onclick="triggerUploadPDF('MTK-X-2026')">📄 Upload PDF Soal</button>
+                    </div>
+                    <div class="action-row">
+                        <button class="btn-sm btn-secondary">✏️ Edit</button>
+                        <button class="btn-sm btn-danger">❌ Hapus</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="exam-card glass-panel">
+                <div class="exam-header">
+                    <div class="exam-title">
+                        <h3>Bahasa Inggris</h3>
+                        <span class="badge">Kelas X IPS 2</span>
+                    </div>
+                </div>
+                
+                <div class="exam-body">
+                    <div class="exam-info">
+                        <div class="info-item">
+                            <span class="label">Token Ujian:</span>
+                            <span class="token-text">ENG-X-2026</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Waktu Mulai:</span>
+                            <span>04 Juni 2026, 09:30</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Waktu Selesai:</span>
+                            <span>04 Juni 2026, 11:30</span>
+                        </div>
+                    </div>
+                    <div class="exam-qr">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=ENG-X-2026" alt="QR Code Token">
+                        <button class="btn-dl-qr" onclick="downloadQR('ENG-X-2026')">⬇️ Download QR</button>
+                    </div>
+                </div>
+
+                <div class="exam-actions">
+                    <div class="action-row">
+                        <button class="btn-sm btn-info">👁️ Lihat Hasil</button>
+                        <button class="btn-sm btn-success">⬇️ Download Hasil</button>
+                    </div>                    
+                    <div class="action-row" style="margin-top: 5px; margin-bottom: 5px;">
+                        <button class="btn-sm btn-upload-pdf" onclick="triggerUploadPDF('ENG-X-2026')">📄 Upload PDF Soal</button>
+                    </div>
+                    <div class="action-row">
+                        <button class="btn-sm btn-secondary">✏️ Edit</button>
+                        <button class="btn-sm btn-danger">❌ Hapus</button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+            <div id="addExamModal" class="modal-overlay">
+            <div class="modal-box glass-panel modal-large">
+                <h3 style="margin-bottom: 5px; font-size: 20px;">Tambah Bank Soal & Jadwal</h3>
+                <p class="modal-subtitle">Silakan lengkapi detail ujian di bawah ini</p>
+                
+                <form action="#">
+                    <div class="form-grid">
+                        
+                        <div class="detail-group full-width">
+                            <label>1. Nama Mata Pelajaran</label>
+                            <input type="text" class="modal-input" placeholder="Contoh: Matematika Wajib" required>
+                        </div>
+
+                        <div class="detail-group">
+                            <label>2. Kelas Sasaran</label>
+                            <select class="modal-select" required>
+                                <option value="" disabled selected>Pilih Kelas</option>
+                                <option value="X IPA 1">X IPA 1</option>
+                                <option value="X IPA 2">X IPA 2</option>
+                                <option value="X IPS 1">X IPS 1</option>
+                                <option value="X IPS 2">X IPS 2</option>
+                            </select>
+                        </div>
+
+                        <div class="detail-group">
+                            <label>3. Tipe Ujian</label>
+                            <select class="modal-select" required>
+                                <option value="" disabled selected>Pilih Tipe</option>
+                                <option value="Umum">Umum</option>
+                                <option value="Agama">Agama</option>
+                            </select>
+                        </div>
+
+                        <div class="detail-group full-width" style="margin-top: 10px; margin-bottom: 10px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <label style="margin: 0; font-size: 14px;">4. Komposisi & Tipe Soal</label>
+                            <button type="button" class="btn-sm btn-info" onclick="tambahTipeSoal()">➕ Tambah Tipe</button>
+                        </div>
+                        
+                        <div id="komposisi-container">
+                            <div class="komposisi-row" id="row-1">
+                                <select class="modal-select" style="flex: 2;" onchange="ubahInputKunci(this)" required>
+                                    <option value="" disabled selected>Pilih Tipe</option>
+                                    <option value="PG">Pilihan Ganda</option>
+                                    <option value="PG Kompleks">PG Kompleks</option>
+                                    <option value="Isian Singkat">Isian Singkat</option>
+                                    <option value="Mencocokkan">Mencocokkan</option>
+                                    <option value="Essay">Essay / Uraian</option>
+                                </select>
+                                <input type="text" class="modal-input" placeholder="No (Cth: 1-20)" style="flex: 1.5;" required>
+                                <input type="text" class="modal-input input-kunci" placeholder="Kunci (Pisahkan dgn koma)" style="flex: 3;">
+                                <button type="button" class="btn-sm btn-danger" onclick="hapusBaris('row-1')" style="padding: 10px;" title="Hapus Baris">❌</button>
+                            </div>
+                        </div>
+                        <small style="color: #888; font-size: 11px; margin-top: 5px;">*Contoh: No (1-20), Kunci (A, B, C, D...)</small>
+                    </div>
+
+                    <div class="detail-group">
+                        <label>5. Waktu Mulai Ujian</label>
+                        <input type="datetime-local" class="modal-input" required>
+                    </div>
+
+                    <div class="detail-group">
+                        <label>6. Waktu Selesai Ujian</label>
+                        <input type="datetime-local" class="modal-input" required>
+                    </div>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 25px;">
+                        <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeModal('addExamModal')">Batal</button>
+                        <button type="submit" class="btn btn-primary" style="flex: 1;">Simpan & Buat Token</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function prosesLogout() {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        }
+
+        // Fungsi untuk Download QR Code resolusi tinggi untuk di-print
+        function downloadQR(token) {
+            // Kita panggil API dengan ukuran 500x500 agar tidak pecah saat diprint
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${token}`;
+            
+            // Mengambil data gambar dan memicu proses download
+            fetch(qrUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    // Nama file otomatis mengikuti Token ujian
+                    a.download = `QRCode_${token}.png`; 
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(() => {
+                    // Fallback jika fetch gagal (misal koneksi bermasalah), buka di tab baru
+                    window.open(qrUrl, '_blank');
+                });
+        }
+
+        // Fungsi Universal untuk Membuka Modal
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        // Fungsi Universal untuk Menutup Modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Counter ID untuk baris dinamis
+        let rowCount = 1;
+
+        function tambahTipeSoal() {
+            rowCount++;
+            const container = document.getElementById('komposisi-container');
+            
+            const newRow = document.createElement('div');
+            newRow.className = 'komposisi-row';
+            newRow.id = `row-${rowCount}`;
+            
+            newRow.innerHTML = `
+                <select class="modal-select" style="flex: 2;" onchange="ubahInputKunci(this)" required>
+                    <option value="" disabled selected>Pilih Tipe</option>
+                    <option value="PG">Pilihan Ganda</option>
+                    <option value="PG Kompleks">PG Kompleks</option>
+                    <option value="Isian Singkat">Isian Singkat</option>
+                    <option value="Mencocokkan">Mencocokkan</option>
+                    <option value="Essay">Essay / Uraian</option>
+                </select>
+                <input type="text" class="modal-input" placeholder="No (Cth: 21-25)" style="flex: 1.5;" required>
+                <input type="text" class="modal-input input-kunci" placeholder="Kunci (Pisahkan dgn koma)" style="flex: 3;">
+                <button type="button" class="btn-sm btn-danger" onclick="hapusBaris('row-${rowCount}')" style="padding: 10px;" title="Hapus Baris">❌</button>
+            `;
+            
+            container.appendChild(newRow);
+        }
+
+        // Fungsi untuk Menghapus Baris Tipe Soal
+        function hapusBaris(rowId) {
+            // Memastikan tidak menghapus baris terakhir jika hanya sisa 1
+            const container = document.getElementById('komposisi-container');
+            if (container.children.length > 1) {
+                document.getElementById(rowId).remove();
+            } else {
+                alert("Minimal harus ada 1 tipe soal!");
+            }
+        }
+
+        // Fungsi untuk mengubah petunjuk kunci jawaban sesuai tipe soal
+        function ubahInputKunci(selectElement) {
+            // Mencari kotak input kunci jawaban yang sejajar dengan dropdown
+            const row = selectElement.parentElement;
+            const inputKunci = row.querySelector('.input-kunci');
+            
+            const tipe = selectElement.value;
+
+            // Reset state ke default terlebih dahulu
+            inputKunci.required = true;
+            inputKunci.disabled = false;
+            inputKunci.style.backgroundColor = "#fff"; // Pastikan warnanya putih
+            
+            // Opsional: Kosongkan isi jika guru berubah pikiran ganti tipe soal
+            if(tipe === 'Isian Singkat' || tipe === 'Essay') {
+                inputKunci.value = ""; 
+            }
+
+            if (tipe === 'PG') {
+                inputKunci.placeholder = "Cth: A, B, C, D...";
+            } 
+            else if (tipe === 'PG Kompleks') {
+                inputKunci.placeholder = "Cth: AC, BD, ABE...";
+            } 
+            else if (tipe === 'Mencocokkan') {
+                inputKunci.placeholder = "Cth Pasangan: 1A, 2C, 3B...";
+            } 
+            else if (tipe === 'Isian Singkat' || tipe === 'Essay') {
+                // --- UPDATE: MATIKAN KOTAK INPUT ---
+                inputKunci.placeholder = "Koreksi Manual (Tidak butuh kunci)";
+                inputKunci.required = false; // Tidak wajib diisi
+                inputKunci.disabled = true;  // Matikan kotak agar tidak bisa diklik
+                inputKunci.style.backgroundColor = "#f5f5f5"; // Beri warna abu-abu
+            } 
+            else {
+                inputKunci.placeholder = "Kunci Jawaban";
+            }
+        }
+
+        // Fungsi Dinamis untuk Menangani Upload PDF Soal dari Card
+        function triggerUploadPDF(token) {
+            // Membuat elemen input file di memori secara dinamis
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = '.pdf'; // Hanya menerima format PDF
+            
+            // Event ketika guru selesai memilih file
+            fileInput.onchange = e => {
+                const file = e.target.files[0];
+                
+                if (file) {
+                    // Validasi ekstensi file (jaga-jaga jika bypass)
+                    if (file.type !== "application/pdf") {
+                        alert("Format file salah! Harap unggah berkas berformat PDF.");
+                        return;
+                    }
+                    
+                    // Validasi ukuran file (Misal maksimal 5MB)
+                    const maxSize = 5 * 1024 * 1024; // 5 Megabytes
+                    if (file.size > maxSize) {
+                        alert("File terlalu besar! Maksimal ukuran PDF soal adalah 5 MB.");
+                        return;
+                    }
+
+                    // Notifikasi sukses (Langkah frontend berhasil)
+                    alert(`Berhasil memilih berkas:\n📄 ${file.name}\n\nSistem siap mengunggah soal ini untuk Ujian dengan Token: ${token}`);
+                    
+                    /* NANTI DI SINI: Tempat Anda meletakkan logic Firebase Storage 
+                       Contoh: uploadSoalToFirebase(file, token);
+                    */
+                }
+            };
+            
+            // Pemicu klik otomatis jendela file explorer
+            fileInput.click();
+        }
+    </script>
+
+</body>
+</html>

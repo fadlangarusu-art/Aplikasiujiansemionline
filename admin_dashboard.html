@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin | SMPN2BK</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin_style.css">
+</head>
+<body>
+
+    <aside class="sidebar glass-panel">
+        <div class="sidebar-header">
+            <img src="logo sekolah.png" alt="Logo" class="sidebar-logo">
+            <h3>Administrator</h3>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" id="link-dashboard" class="active" onclick="switchMenu('dashboard')">Dashboard Utama</a></li>
+            <li><a href="#" id="link-pengguna" onclick="switchMenu('pengguna')">Daftar Pengguna</a></li>
+            <li><a href="#" class="text-danger" onclick="prosesLogout()">🚪 Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+
+        <div id="view-dashboard" class="view-section active-view">
+            <header class="top-header glass-panel" style="margin-bottom: 20px;">
+                <h2>Selamat Datang, Admin! 👋</h2>
+                <p>Ini adalah ringkasan data sekolah kita saat ini.</p>
+            </header>
+
+            <section class="stats-grid">
+                <div class="stat-card glass-panel">
+                    <div class="stat-info">
+                        <h3>Total Guru</h3>
+                        <h2>45</h2>
+                    </div>
+                    <div class="stat-icon">👨‍🏫</div>
+                </div>
+                <div class="stat-card glass-panel">
+                    <div class="stat-info">
+                        <h3>Total Siswa</h3>
+                        <h2>850</h2>
+                    </div>
+                    <div class="stat-icon">🎓</div>
+                </div>
+                <div class="stat-card glass-panel">
+                    <div class="stat-info">
+                        <h3>Total Kelas</h3>
+                        <h2>24</h2>
+                    </div>
+                    <div class="stat-icon">🏫</div>
+                </div>
+            </section>
+        </div>
+
+        <div id="view-pengguna" class="view-section" style="display: none;">
+            <header class="top-header glass-panel" style="margin-bottom: 20px;">
+                <h2>Manajemen Daftar Pengguna 👥</h2>
+                <p>Kelola data guru dan siswa di sini.</p>
+            </header>
+
+            <section class="action-toolbar glass-panel" style="margin-bottom: 20px;">
+                <div class="action-group">
+                    <button class="btn btn-primary" onclick="openModal('addTeacherModal')">➕ Tambah Guru</button>
+                    <button class="btn btn-primary" onclick="openModal('addStudentModal')">➕ Tambah Siswa</button>
+                    <button class="btn btn-secondary">📂 Import Guru</button>
+                    <button class="btn btn-secondary">📂 Import Siswa</button>
+                </div>
+                <div class="action-group">
+                    <button class="btn btn-danger">🗑️ Kosongkan Guru</button>
+                    <button class="btn btn-danger">🗑️ Kosongkan Siswa</button>
+                </div>
+            </section>
+            <section class="table-section glass-panel" style="margin-bottom: 25px; border-left: 5px solid #f39c12;">
+                <div class="table-header">
+                    <h3 style="color: #d35400;">Menunggu Persetujuan ⏳</h3>
+                    <p style="font-size: 13px; color: #666;">Akun baru yang mendaftar dan membutuhkan verifikasi Anda.</p>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tanggal Daftar</th>
+                                <th>Nama Lengkap</th>
+                                <th>Email</th>
+                                <th>Pengajuan Role</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabel-pending">
+                            <tr id="pending-1">
+                                <td>11 Juni 2026</td>
+                                <td>Ahmad Fauzi, S.Kom</td>
+                                <td>ahmad.f@sekolah.com</td>
+                                <td><span style="background: #e3f2fd; color: #1976d2; padding: 3px 8px; border-radius: 4px; font-size: 12px;">Guru</span></td>
+                                <td>
+                                    <button class="btn-sm btn-success" onclick="setujuiAkun('pending-1', 'Ahmad Fauzi')">✅ Setujui</button>
+                                    <button class="btn-sm btn-danger" onclick="tolakAkun('pending-1', 'Ahmad Fauzi')">❌ Tolak</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section class="table-section glass-panel" style="margin-bottom: 20px;">
+                <div class="table-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3>Data Guru</h3>
+                    <input type="text" placeholder="🔍 Cari nama/NIP..." class="search-input">
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>No</th><th>Nama Guru</th><th>NIP / ID</th><th>Aksi</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td><td>Budi Santoso, S.Pd</td><td>198002122005011001</td>
+                                <td>
+                                    <button class="btn-sm btn-info" onclick="showModal('Budi Santoso', 'budi_guru', 'budi123!')">👁️ Akun</button>
+                                    <button class="btn-sm btn-danger">❌ Hapus</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="table-section glass-panel">
+                <div class="table-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3>Data Siswa</h3>
+                    <input type="text" placeholder="🔍 Cari nama/NISN..." class="search-input">
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>No</th><th>Nama Siswa</th><th>NISN</th><th>Kelas</th><th>Aksi</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td><td>Andi Saputra</td><td>0051234567</td><td>X IPA 1</td>
+                                <td>
+                                    <button class="btn-sm btn-info" onclick="showModal('Andi Saputra', 'andi_siswa', 'andi2024')">👁️ Akun</button>
+                                    <button class="btn-sm btn-danger">❌ Hapus</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button class="btn-sm btn-secondary">← Prev</button>
+                    <span>Halaman 1 dari 30</span>
+                    <button class="btn-sm btn-secondary">Next →</button>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <div id="accountModal" class="modal-overlay">
+        <div class="modal-box glass-panel">
+            <h3>Informasi Akun</h3>
+            <p class="modal-subtitle" id="modalName">Nama Pengguna</p>
+            <div class="account-details">
+                <div class="detail-group"><label>Username</label><input type="text" id="modalUsername" readonly></div>
+                <div class="detail-group"><label>Password</label><input type="text" id="modalPassword" readonly></div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="closeModal()">Tutup</button>
+        </div>
+    </div>
+    <div id="addTeacherModal" class="modal-overlay">
+        <div class="modal-box glass-panel">
+            <h3>Tambah Data Guru</h3>
+            <p class="modal-subtitle">Masukkan informasi guru baru</p>
+            
+            <form action="#"> <div class="account-details">
+                    <div class="detail-group">
+                        <label>Nama Guru</label>
+                        <input type="text" placeholder="Contoh: Budi Santoso, S.Pd" required>
+                    </div>
+                    <div class="detail-group">
+                        <label>NIP / ID</label>
+                        <input type="text" placeholder="Masukkan NIP atau ID Guru" required>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeModal('addTeacherModal')">Batal</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="addStudentModal" class="modal-overlay">
+        <div class="modal-box glass-panel">
+            <h3>Tambah Data Siswa</h3>
+            <p class="modal-subtitle">Masukkan informasi siswa baru</p>
+            
+            <form action="#"> <div class="account-details">
+                    <div class="detail-group">
+                        <label>Nama Siswa</label>
+                        <input type="text" placeholder="Contoh: Andi Saputra" required>
+                    </div>
+                    <div class="detail-group">
+                        <label>NISN</label>
+                        <input type="number" placeholder="Masukkan NISN" required>
+                    </div>
+                    <div class="detail-group">
+                        <label>Kelas</label>
+                        <select class="modal-select" required>
+                            <option value="" disabled selected>Pilih Kelas</option>
+                            <option value="X IPA 1">X IPA 1</option>
+                            <option value="X IPA 2">X IPA 2</option>
+                            <option value="X IPS 1">X IPS 1</option>
+                            <option value="X IPS 2">X IPS 2</option>
+                        </select>
+                    </div>
+                    <div class="detail-group">
+                        <label>Agama</label>
+                        <select class="modal-select" required>
+                            <option value="" disabled selected>Pilih Agama</option>
+                            <option value="Islam">Islam</option>
+                            <option value="Kristen">Kristen</option>
+                            <option value="Katolik">Katolik</option>
+                            <option value="Hindu">Hindu</option>
+                            <option value="Buddha">Buddha</option>
+                            <option value="Konghucu">Konghucu</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeModal('addStudentModal')">Batal</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi pindah menu
+        function switchMenu(menuName) {
+            // Sembunyikan semua konten
+            document.getElementById('view-dashboard').style.display = 'none';
+            document.getElementById('view-pengguna').style.display = 'none';
+            
+            // Hapus class 'active' dari semua link sidebar
+            document.getElementById('link-dashboard').classList.remove('active');
+            document.getElementById('link-pengguna').classList.remove('active');
+
+            // Tampilkan konten yang dipilih dan beri warna active
+            if (menuName === 'dashboard') {
+                document.getElementById('view-dashboard').style.display = 'block';
+                document.getElementById('link-dashboard').classList.add('active');
+            } else if (menuName === 'pengguna') {
+                document.getElementById('view-pengguna').style.display = 'block';
+                document.getElementById('link-pengguna').classList.add('active');
+            }
+        }
+
+        // Fungsi modal popup
+        function showModal(name, username, password) {
+            document.getElementById('modalName').innerText = name;
+            document.getElementById('modalUsername').value = username;
+            document.getElementById('modalPassword').value = password;
+            document.getElementById('accountModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('accountModal').style.display = 'none';
+        }
+
+        // Fungsi pindah menu (Tetap sama)
+        function switchMenu(menuName) {
+            document.getElementById('view-dashboard').style.display = 'none';
+            document.getElementById('view-pengguna').style.display = 'none';
+            
+            document.getElementById('link-dashboard').classList.remove('active');
+            document.getElementById('link-pengguna').classList.remove('active');
+
+            if (menuName === 'dashboard') {
+                document.getElementById('view-dashboard').style.display = 'block';
+                document.getElementById('link-dashboard').classList.add('active');
+            } else if (menuName === 'pengguna') {
+                document.getElementById('view-pengguna').style.display = 'block';
+                document.getElementById('link-pengguna').classList.add('active');
+            }
+        }
+
+        // Fungsi khusus untuk modal "Lihat Akun"
+        function showAccountModal(name, username, password) {
+            document.getElementById('modalName').innerText = name;
+            document.getElementById('modalUsername').value = username;
+            document.getElementById('modalPassword').value = password;
+            openModal('accountModal');
+        }
+
+        // Fungsi Universal untuk Membuka Modal berdasarkan ID
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        // Fungsi Universal untuk Menutup Modal berdasarkan ID
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Fungsi untuk memproses Logout
+        function prosesLogout() {
+            // Nanti di sini Anda bisa menambahkan kode Firebase untuk sign-out
+            // Contoh: firebase.auth().signOut();
+            
+            // Opsional: Hapus data sesi di memori browser
+            localStorage.clear();
+            sessionStorage.clear();
+            
+            // Alihkan kembali ke halaman login
+            window.location.href = 'login.html';
+        }
+        // --- LOGIKA PERSETUJUAN AKUN (SIMULASI FIREBASE) ---
+        
+        // Fungsi untuk menyetujui akun (Mengubah status dari 'pending' menjadi 'approved')
+        function setujuiAkun(uid, namaPengguna) {
+            const konfirmasi = confirm(`Apakah Anda yakin ingin MENGAKTIFKAN akun milik ${namaPengguna}?`);
+            
+            if(konfirmasi) {
+                // Update data di Firebase Realtime Database
+                firebase.database().ref('users/' + uid).update({ 
+                    status: 'approved' 
+                })
+                .then(() => {
+                    alert(`Berhasil! Akun ${namaPengguna} sekarang bisa login.`);
+                    // Tidak perlu menghapus baris secara manual (document.getElementById.remove), 
+                    // karena fungsi loadDataPending() akan otomatis memperbarui UI.
+                })
+                .catch((error) => {
+                    alert("Terjadi kesalahan: " + error.message);
+                });
+            }
+        }
+
+        // Fungsi untuk menolak akun (Menghapus data dari database)
+        function tolakAkun(uid, namaPengguna) {
+            const konfirmasi = confirm(`Apakah Anda yakin ingin MENOLAK dan MENGHAPUS pendaftaran ${namaPengguna}?`);
+            
+            if(konfirmasi) {
+                // Hapus data pengguna tersebut dari Realtime Database
+                firebase.database().ref('users/' + uid).remove()
+                .then(() => {
+                    alert(`Pendaftaran ${namaPengguna} telah ditolak dan dihapus.`);
+                })
+                .catch((error) => {
+                    alert("Terjadi kesalahan: " + error.message);
+                });
+            }
+        }
+
+        // Mengambil elemen tabel
+        const tabelPending = document.getElementById('tabel-pending');
+
+        // Fungsi untuk memuat data pendaftar yang statusnya 'pending'
+        function loadDataPending() {
+            // Membaca data dari tabel 'users' yang statusnya 'pending'
+            firebase.database().ref('users').orderByChild('status').equalTo('pending').on('value', (snapshot) => {
+                tabelPending.innerHTML = ''; // Kosongkan tabel bawaan/dummy
+                
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        const uid = childSnapshot.key; // UID unik dari Firebase Auth
+                        const data = childSnapshot.val();
+
+                        // Membuat baris HTML untuk setiap pendaftar
+                        const row = `
+                            <tr id="${uid}">
+                                <td>Menunggu</td> <td>${data.nama}</td>
+                                <td>${data.username}</td>
+                                <td><span style="background: #e3f2fd; color: #1976d2; padding: 3px 8px; border-radius: 4px; font-size: 12px; text-transform: capitalize;">${data.role}</span></td>
+                                <td>
+                                    <button class="btn-sm btn-success" onclick="setujuiAkun('${uid}', '${data.nama}')">✅ Setujui</button>
+                                    <button class="btn-sm btn-danger" onclick="tolakAkun('${uid}', '${data.nama}')">❌ Tolak</button>
+                                </td>
+                            </tr>
+                        `;
+                        tabelPending.innerHTML += row;
+                    });
+                } else {
+                    // Jika tidak ada data yang pending
+                    tabelPending.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px;">Tidak ada akun yang menunggu persetujuan.</td></tr>';
+                }
+            });
+        }
+
+        // Jalankan fungsi saat halaman selesai dimuat
+        window.onload = loadDataPending;
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+    // Ganti dengan konfigurasi dari Firebase Console Anda
+    const firebaseConfig = {
+    apiKey: "AIzaSyBS8wBXqe_OZFRXrWQTP3B93RXxNaZ7vFg",
+    authDomain: "aplikasi-ujian-sekolah-smp2bk.firebaseapp.com",
+    databaseURL: "https://aplikasi-ujian-sekolah-smp2bk-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "aplikasi-ujian-sekolah-smp2bk",
+    storageBucket: "aplikasi-ujian-sekolah-smp2bk.firebasestorage.app",
+    messagingSenderId: "422205736440",
+    appId: "1:422205736440:web:b291132c904f58ddd3820d",
+    measurementId: "G-FRKS6C55ZF"
+    };
+    
+    // Inisialisasi Firebase
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    </script>
+
+</body>
+</html>
